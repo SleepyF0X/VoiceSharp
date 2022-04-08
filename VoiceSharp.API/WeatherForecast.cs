@@ -1,6 +1,6 @@
 using System;
 
-namespace VoiceSharp
+namespace VoiceSharp.API
 {
     public class WeatherForecast
     {

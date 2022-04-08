@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace VoiceSharp.Controllers
+namespace VoiceSharp.API.Controllers
 {
     [ApiController]
     [Route("[controller]")]

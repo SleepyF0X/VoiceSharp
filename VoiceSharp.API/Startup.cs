@@ -11,8 +11,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using VoiceSharp.Persistance;
 
-namespace VoiceSharp
+namespace VoiceSharp.API
 {
     public class Startup
     {
@@ -29,8 +30,9 @@ namespace VoiceSharp
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo {Title = "VoiceSharp", Version = "v1"});
+                c.SwaggerDoc("v1", new OpenApiInfo {Title = "VoiceSharp.API", Version = "v1"});
             });
+            services.AddDomainServices(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -40,7 +42,7 @@ namespace VoiceSharp
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "VoiceSharp v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "VoiceSharp.API v1"));
             }
 
             app.UseHttpsRedirection();
