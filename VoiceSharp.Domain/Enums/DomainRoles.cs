@@ -1,4 +1,4 @@
-namespace VoiceSharp.Domain.Constants;
+namespace VoiceSharp.Domain.Enums;
 
 public enum DomainRoles
 {

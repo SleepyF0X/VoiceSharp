@@ -2,9 +2,11 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VoiceSharp.API", "VoiceSharp.API\VoiceSharp.API.csproj", "{94F36624-D09A-4B46-ADAB-33384A40D05E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VoiceSharp.Persistance", "VoiceSharp.Persistance\VoiceSharp.Persistance.csproj", "{BCE42025-6AB9-41A0-B5B1-C7F9A708F214}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VoiceSharp.Persistence", "VoiceSharp.Persistence\VoiceSharp.Persistence.csproj", "{BCE42025-6AB9-41A0-B5B1-C7F9A708F214}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VoiceSharp.Domain", "VoiceSharp.Domain\VoiceSharp.Domain.csproj", "{A21D0DAC-B12B-4D84-8611-B256AABAEDAF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VoiceSharp.ApplicationServices", "VoiceSharp.ApplicationServices\VoiceSharp.ApplicationServices.csproj", "{559D579B-E2F3-44FC-BC8E-D8E0145B9AD4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,5 +26,9 @@ Global
 		{A21D0DAC-B12B-4D84-8611-B256AABAEDAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A21D0DAC-B12B-4D84-8611-B256AABAEDAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A21D0DAC-B12B-4D84-8611-B256AABAEDAF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{559D579B-E2F3-44FC-BC8E-D8E0145B9AD4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{559D579B-E2F3-44FC-BC8E-D8E0145B9AD4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{559D579B-E2F3-44FC-BC8E-D8E0145B9AD4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{559D579B-E2F3-44FC-BC8E-D8E0145B9AD4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -5,10 +5,10 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using VoiceSharp.Domain.Constants;
+using VoiceSharp.Domain.Enums;
 using VoiceSharp.Domain.Models;
 
-namespace VoiceSharp.Persistance;
+namespace VoiceSharp.Persistence;
 
 public class VoiceSharpContextSeedData
 {
