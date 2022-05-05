@@ -2,25 +2,24 @@
 using VoiceSharp.Domain.ValidationRules;
 using VoiceSharp.Persistence;
 
-namespace VoiceSharp.ApplicationServices.Auth.ValidationRules
+namespace VoiceSharp.ApplicationServices.Auth.ValidationRules;
+
+public interface IRefreshTokenRules : IValidationRule
 {
-    public interface IRefreshTokenRules : IValidationRule
+    Task<bool> UserIsRegistered(string userName, CancellationToken cancellationToken);
+}
+
+public sealed class RefreshTokenRules : IRefreshTokenRules
+{
+    private readonly VoiceSharpContext _context;
+
+    public RefreshTokenRules(VoiceSharpContext context)
     {
-        Task<bool> UserIsRegistered(string userName, CancellationToken cancellationToken);
+        _context = context;
     }
 
-    public sealed class RefreshTokenRules : IRefreshTokenRules
+    public async Task<bool> UserIsRegistered(string userName, CancellationToken cancellationToken)
     {
-        private readonly VoiceSharpContext _context;
-
-        public RefreshTokenRules(VoiceSharpContext context)
-        {
-            _context = context;
-        }
-
-        public async Task<bool> UserIsRegistered(string userName, CancellationToken cancellationToken)
-        {
-            return await _context.Users.AnyAsync(_ => _.UserName.ToLower().Equals(userName.ToLower()), cancellationToken);
-        }
+        return await _context.Users.AnyAsync(_ => _.UserName.ToLower().Equals(userName.ToLower()), cancellationToken);
     }
 }

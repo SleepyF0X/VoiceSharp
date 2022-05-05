@@ -1,8 +1,8 @@
-namespace VoiceSharp.ApplicationServices.EmailService.Constants
+namespace VoiceSharp.ApplicationServices.EmailService.Constants;
+
+public class EmailLayouts
 {
-    public class EmailLayouts
-    {
-        public const string Default = @"<!DOCTYPE html>
+    public const string Default = @"<!DOCTYPE html>
                     <html lang='en'>
 
                     <head>
@@ -22,5 +22,4 @@ namespace VoiceSharp.ApplicationServices.EmailService.Constants
                             </div>
 
                     </body>";
-    }
 }

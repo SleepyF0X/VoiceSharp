@@ -7,69 +7,68 @@ using VoiceSharp.Domain.Enums;
 using VoiceSharp.Domain.General;
 using VoiceSharp.Domain.Models;
 
-namespace VoiceSharp.ApplicationServices.Auth.Commands
+namespace VoiceSharp.ApplicationServices.Auth.Commands;
+
+public sealed class RegisterNewUserCommand : IRequest<OperationResult>
 {
-    public sealed class RegisterNewUserCommand : IRequest<OperationResult>
+    public string Email { get; set; }
+    public string Password { get; set; }
+    public string ConfirmPassword { get; set; }
+}
+
+public class RegisterNewUserCommandValidator : AbstractValidator<RegisterNewUserCommand>
+{
+    public RegisterNewUserCommandValidator(IRegisterNewUserValidationRules rules)
     {
-        public string Email { get; set; }
-        public string Password { get; set; }
-        public string ConfirmPassword { get; set; }
+        RuleFor(_ => _.Email)
+            .NotEmpty()
+            .WithMessage(string.Format(ErrorConstants.FieldIsRequired, nameof(RegisterNewUserCommand.Email)))
+            .MustAsync(rules.UserNameIsUniqueAsync)
+            .WithMessage(_ => string.Format(ErrorConstants.EntityAlreadyExists, "User", nameof(RegisterNewUserCommand.Email), _.Email));
+
+        RuleFor(_ => _.Password)
+            .NotEmpty()
+            .WithMessage(string.Format(ErrorConstants.FieldIsRequired, nameof(RegisterNewUserCommand.Password)));
+
+        RuleFor(_ => _.ConfirmPassword)
+            .NotEmpty()
+            .WithMessage(string.Format(ErrorConstants.FieldIsRequired, "Confirm Password"))
+            .Must((registerNewUserCommand, confirmPassword) => registerNewUserCommand.Password.Trim().Equals(confirmPassword.Trim()))
+            .WithMessage(ErrorConstants.PasswordsDoNotMatch);
+    }
+}
+
+public sealed class RegisterNewUserCommandHandler : IRequestHandler<RegisterNewUserCommand, OperationResult>
+{
+    private readonly UserManager<User> _userManager;
+
+    public RegisterNewUserCommandHandler(UserManager<User> userManager)
+    {
+        _userManager = userManager;
     }
 
-    public class RegisterNewUserCommandValidator : AbstractValidator<RegisterNewUserCommand>
+    public async Task<OperationResult> Handle(RegisterNewUserCommand request, CancellationToken cancellationToken)
     {
-        public RegisterNewUserCommandValidator(IRegisterNewUserValidationRules rules)
+        var newUser = new User
         {
-            RuleFor(_ => _.Email)
-                .NotEmpty()
-                .WithMessage(string.Format(ErrorConstants.FieldIsRequired, nameof(RegisterNewUserCommand.Email)))
-                .MustAsync(rules.UserNameIsUnique)
-                .WithMessage(_ => string.Format(ErrorConstants.EntityAlreadyExists, "User", nameof(RegisterNewUserCommand.Email), _.Email));
+            UserName = request.Email,
+            Email = request.Email,
+        };
 
-            RuleFor(_ => _.Password)
-                .NotEmpty()
-                .WithMessage(string.Format(ErrorConstants.FieldIsRequired, nameof(RegisterNewUserCommand.Password)));
+        var userRegisteredResult = await _userManager.CreateAsync(newUser, request.Password);
 
-            RuleFor(_ => _.ConfirmPassword)
-                .NotEmpty()
-                .WithMessage(string.Format(ErrorConstants.FieldIsRequired, "Confirm Password"))
-                .Must((registerNewUserCommand, confirmPassword) => registerNewUserCommand.Password.Trim().Equals(confirmPassword.Trim()))
-                .WithMessage(ErrorConstants.PasswordsDoNotMatch);
-        }
-    }
-
-    public sealed class RegisterNewUserCommandHandler : IRequestHandler<RegisterNewUserCommand, OperationResult>
-    {
-        private readonly UserManager<User> _userManager;
-
-        public RegisterNewUserCommandHandler(UserManager<User> userManager)
+        if (!userRegisteredResult.Succeeded)
         {
-            _userManager = userManager;
+            return OperationResult.Fail(userRegisteredResult.Errors.Select(_ => _.Description).ToList());
         }
 
-        public async Task<OperationResult> Handle(RegisterNewUserCommand request, CancellationToken cancellationToken)
+        var userObtainedRoleStudentResult = await _userManager.AddToRoleAsync(newUser, DomainRoles.Voter.ToString());
+
+        if (!userObtainedRoleStudentResult.Succeeded)
         {
-            var newUser = new User
-            {
-                UserName = request.Email,
-                Email = request.Email,
-            };
-
-            var userRegisteredResult = await _userManager.CreateAsync(newUser, request.Password);
-
-            if (!userRegisteredResult.Succeeded)
-            {
-                return OperationResult.Fail(userRegisteredResult.Errors.Select(_ => _.Description).ToList());
-            }
-
-            var userObtainedRoleStudentResult = await _userManager.AddToRoleAsync(newUser, DomainRoles.Voter.ToString());
-
-            if (!userObtainedRoleStudentResult.Succeeded)
-            {
-                return OperationResult.Fail(userObtainedRoleStudentResult.Errors.Select(_ => _.Description).ToList());
-            }
-
-            return OperationResult.Ok();
+            return OperationResult.Fail(userObtainedRoleStudentResult.Errors.Select(_ => _.Description).ToList());
         }
+
+        return OperationResult.Ok();
     }
 }

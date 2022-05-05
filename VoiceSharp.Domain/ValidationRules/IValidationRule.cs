@@ -1,6 +1,5 @@
-namespace VoiceSharp.Domain.ValidationRules
+namespace VoiceSharp.Domain.ValidationRules;
+
+public interface IValidationRule
 {
-    public interface IValidationRule
-    {
-    }
 }

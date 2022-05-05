@@ -1,6 +1,8 @@
-﻿namespace VoiceSharp.ApplicationServices.JwtAuthService.ResultModels;
+﻿using System.Collections.Generic;
 
-public sealed class RefreshTokenResult
+namespace VoiceSharp.API.Responses.Auth;
+
+public class LoginResponse
 {
     public string UserName { get; set; }
     public List<string> Roles { get; set; }

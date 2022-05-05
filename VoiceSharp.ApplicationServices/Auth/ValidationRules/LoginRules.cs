@@ -2,25 +2,24 @@
 using VoiceSharp.Domain.ValidationRules;
 using VoiceSharp.Persistence;
 
-namespace VoiceSharp.ApplicationServices.Auth.ValidationRules
+namespace VoiceSharp.ApplicationServices.Auth.ValidationRules;
+
+public interface ILoginRules : IValidationRule
 {
-    public interface ILoginRules : IValidationRule
+    Task<bool> UserIsRegistered(string userName, CancellationToken cancellationToken);
+}
+
+public sealed class LoginRules : ILoginRules
+{
+    private readonly VoiceSharpContext _context;
+
+    public LoginRules(VoiceSharpContext context)
     {
-        Task<bool> UserIsRegistered(string userName, CancellationToken cancellationToken);
+        _context = context;
     }
 
-    public sealed class LoginRules : ILoginRules
+    public async Task<bool> UserIsRegistered(string userName, CancellationToken cancellationToken)
     {
-        private readonly VoiceSharpContext _context;
-
-        public LoginRules(VoiceSharpContext context)
-        {
-            _context = context;
-        }
-
-        public async Task<bool> UserIsRegistered(string userName, CancellationToken cancellationToken)
-        {
-            return await _context.Users.AnyAsync(_ => _.UserName.ToLower().Equals(userName.ToLower()), cancellationToken);
-        }
+        return await _context.Users.AnyAsync(_ => _.UserName.ToLower().Equals(userName.ToLower()), cancellationToken);
     }
 }

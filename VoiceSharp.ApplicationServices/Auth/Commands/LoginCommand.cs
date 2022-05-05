@@ -9,68 +9,67 @@ using VoiceSharp.Domain.Constants;
 using VoiceSharp.Domain.General;
 using VoiceSharp.Domain.Models;
 
-namespace VoiceSharp.ApplicationServices.Auth.Commands
+namespace VoiceSharp.ApplicationServices.Auth.Commands;
+
+public sealed class LoginCommand : IRequest<OperationResult<LoginResult>>
 {
-    public sealed class LoginCommand : IRequest<OperationResult<LoginResult>>
+    public string Email { get; set; }
+    public string Password { get; set; }
+}
+
+public class LoginCommandValidator : AbstractValidator<LoginCommand>
+{
+    public LoginCommandValidator(ILoginRules rules)
     {
-        public string Email { get; set; }
-        public string Password { get; set; }
+        RuleFor(_ => _.Email)
+            .NotEmpty()
+            .WithMessage(ErrorConstants.InvalidCredentials)
+            .MustAsync(rules.UserIsRegistered)
+            .WithMessage(_ => ErrorConstants.InvalidCredentials);
+
+        RuleFor(_ => _.Password)
+            .NotEmpty()
+            .WithMessage(ErrorConstants.InvalidCredentials);
+    }
+}
+
+public sealed class LoginCommandHandler : IRequestHandler<LoginCommand, OperationResult<LoginResult>>
+{
+    private readonly UserManager<User> _userManager;
+    private readonly IJwtService _jwtService;
+
+    public LoginCommandHandler(UserManager<User> userManager, IJwtService jwtService)
+    {
+        _userManager = userManager;
+        _jwtService = jwtService;
     }
 
-    public class LoginCommandValidator : AbstractValidator<LoginCommand>
+    public async Task<OperationResult<LoginResult>> Handle(LoginCommand request, CancellationToken cancellationToken)
     {
-        public LoginCommandValidator(ILoginRules rules)
+        var user = await _userManager.FindByNameAsync(request.Email);
+
+        var isSucceeded = await _userManager.CheckPasswordAsync(user, request.Password);
+
+        if (!isSucceeded)
         {
-            RuleFor(_ => _.Email)
-                .NotEmpty()
-                .WithMessage(ErrorConstants.InvalidCredentials)
-                .MustAsync(rules.UserIsRegistered)
-                .WithMessage(_ => ErrorConstants.InvalidCredentials);
-
-            RuleFor(_ => _.Password)
-                .NotEmpty()
-                .WithMessage(ErrorConstants.InvalidCredentials);
-        }
-    }
-
-    public sealed class LoginCommandHandler : IRequestHandler<LoginCommand, OperationResult<LoginResult>>
-    {
-        private readonly UserManager<User> _userManager;
-        private readonly IJwtService _jwtService;
-
-        public LoginCommandHandler(UserManager<User> userManager, IJwtService jwtService)
-        {
-            _userManager = userManager;
-            _jwtService = jwtService;
+            return OperationResult.Fail<LoginResult>(ErrorConstants.InvalidCredentials);
         }
 
-        public async Task<OperationResult<LoginResult>> Handle(LoginCommand request, CancellationToken cancellationToken)
+        var userRoles = await _userManager.GetRolesAsync(user);
+        var roleClaims = userRoles.Select(_ => new Claim(ClaimsIdentity.DefaultRoleClaimType, _));
+        var userClaims = new List<Claim>(roleClaims)
         {
-            var user = await _userManager.FindByNameAsync(request.Email);
+            new (ClaimsIdentity.DefaultNameClaimType, user.UserName),
+        };
 
-            var isSucceeded = await _userManager.CheckPasswordAsync(user, request.Password);
+        var jwtResult = _jwtService.GenerateTokens(user.UserName, userClaims, DateTime.UtcNow);
 
-            if (!isSucceeded)
-            {
-                return OperationResult.Fail<LoginResult>(ErrorConstants.InvalidCredentials);
-            }
-
-            var userRoles = await _userManager.GetRolesAsync(user);
-            var roleClaims = userRoles.Select(_ => new Claim(ClaimsIdentity.DefaultRoleClaimType, _));
-            var userClaims = new List<Claim>(roleClaims)
-            {
-                new (ClaimsIdentity.DefaultNameClaimType, user.UserName),
-            };
-
-            var jwtResult = _jwtService.GenerateTokens(user.UserName, userClaims, DateTime.UtcNow);
-
-            return OperationResult.Ok(new LoginResult
-            {
-                UserName = user.UserName,
-                Roles = userRoles.ToList(),
-                AccessToken = jwtResult.AccessToken,
-                RefreshToken = jwtResult.RefreshToken.TokenString,
-            });
-        }
+        return OperationResult.Ok(new LoginResult
+        {
+            UserName = user.UserName,
+            Roles = userRoles.ToList(),
+            AccessToken = jwtResult.AccessToken,
+            RefreshToken = jwtResult.RefreshToken.TokenString,
+        });
     }
 }

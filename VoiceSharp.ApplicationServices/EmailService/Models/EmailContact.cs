@@ -1,18 +1,17 @@
-namespace VoiceSharp.ApplicationServices.EmailService.Models
+namespace VoiceSharp.ApplicationServices.EmailService.Models;
+
+public class EmailContact
 {
-    public class EmailContact
+    public EmailContact()
     {
-        public EmailContact()
-        {
-        }
-
-        public EmailContact(string name, string email)
-        {
-            Name = name;
-            Email = email;
-        }
-
-        public string Name { get; set; }
-        public string Email { get; set; }
     }
+
+    public EmailContact(string name, string email)
+    {
+        Name = name;
+        Email = email;
+    }
+
+    public string Name { get; set; }
+    public string Email { get; set; }
 }
