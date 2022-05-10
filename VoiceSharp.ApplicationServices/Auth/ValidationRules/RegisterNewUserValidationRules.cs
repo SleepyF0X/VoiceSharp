@@ -1,16 +1,11 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using VoiceSharp.Domain.Models;
-using VoiceSharp.Domain.ValidationRules;
+using VoiceSharp.Domain.ValidationRules.Auth;
 
 namespace VoiceSharp.ApplicationServices.Auth.ValidationRules;
 
-public interface IRegisterNewUserValidationRules : IValidationRule
-{
-    Task<bool> UserNameIsUniqueAsync(string userName, CancellationToken cancellationToken);
-}
-
-public sealed class RegisterNewUserValidationRules : IRegisterNewUserValidationRules
+public sealed class RegisterNewUserValidationRules : IRegisterRules
 {
     private readonly UserManager<User> _userManager;
 

@@ -1,4 +1,4 @@
-namespace VoiceSharp.ApplicationServices.EmailService.Models;
+namespace VoiceSharp.Framework.EmailService.Models;
 
 public class EmailContact
 {

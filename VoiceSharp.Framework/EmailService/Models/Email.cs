@@ -1,6 +1,6 @@
-using VoiceSharp.ApplicationServices.EmailService.Constants;
+using VoiceSharp.Framework.EmailService.Constants;
 
-namespace VoiceSharp.ApplicationServices.EmailService.Models;
+namespace VoiceSharp.Framework.EmailService.Models;
 
 public class Email
 {

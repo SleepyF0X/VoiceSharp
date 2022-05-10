@@ -1,4 +1,4 @@
-namespace VoiceSharp.ApplicationServices.EmailService.Constants;
+namespace VoiceSharp.Framework.EmailService.Constants;
 
 public class EmailLayouts
 {

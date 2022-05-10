@@ -21,6 +21,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\VoiceSharp.ApplicationServices\VoiceSharp.ApplicationServices.csproj" />
+      <ProjectReference Include="..\VoiceSharp.Framework\VoiceSharp.Framework.csproj" />
       <ProjectReference Include="..\VoiceSharp.Persistence\VoiceSharp.Persistence.csproj" />
     </ItemGroup>
 

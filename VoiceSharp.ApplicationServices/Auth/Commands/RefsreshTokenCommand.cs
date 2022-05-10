@@ -3,12 +3,12 @@ using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
-using VoiceSharp.ApplicationServices.Auth.ValidationRules;
 using VoiceSharp.ApplicationServices.JwtAuthService;
 using VoiceSharp.ApplicationServices.JwtAuthService.ResultModels;
 using VoiceSharp.Domain.Constants;
 using VoiceSharp.Domain.General;
 using VoiceSharp.Domain.Models;
+using VoiceSharp.Domain.ValidationRules.Auth;
 
 namespace VoiceSharp.ApplicationServices.Auth.Commands;
 

@@ -1,6 +1,6 @@
-using VoiceSharp.ApplicationServices.EmailService.Models;
+using VoiceSharp.Framework.EmailService.Models;
 
-namespace VoiceSharp.ApplicationServices.EmailService.Constants;
+namespace VoiceSharp.Framework.EmailService.Constants;
 
 public static class EmailTemplates
 {

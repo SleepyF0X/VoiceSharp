@@ -1,11 +1,11 @@
 ﻿using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
-using VoiceSharp.ApplicationServices.Auth.ValidationRules;
 using VoiceSharp.Domain.Constants;
 using VoiceSharp.Domain.Enums;
 using VoiceSharp.Domain.General;
 using VoiceSharp.Domain.Models;
+using VoiceSharp.Domain.ValidationRules.Auth;
 
 namespace VoiceSharp.ApplicationServices.Auth.Commands;
 
@@ -18,7 +18,7 @@ public sealed class RegisterNewUserCommand : IRequest<OperationResult>
 
 public class RegisterNewUserCommandValidator : AbstractValidator<RegisterNewUserCommand>
 {
-    public RegisterNewUserCommandValidator(IRegisterNewUserValidationRules rules)
+    public RegisterNewUserCommandValidator(IRegisterRules rules)
     {
         RuleFor(_ => _.Email)
             .NotEmpty()

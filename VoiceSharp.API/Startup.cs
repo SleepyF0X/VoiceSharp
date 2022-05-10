@@ -14,6 +14,7 @@ using VoiceSharp.API.Middlewares;
 using VoiceSharp.ApplicationServices;
 using VoiceSharp.ApplicationServices.Auth.Commands;
 using VoiceSharp.ApplicationServices.AutoMapper;
+using VoiceSharp.Framework;
 using VoiceSharp.Persistence;
 
 namespace VoiceSharp.API;

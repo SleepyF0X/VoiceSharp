@@ -2,7 +2,6 @@
 using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using VoiceSharp.ApplicationServices.EmailService;
 using VoiceSharp.ApplicationServices.Infrastructure.EmailService;
 using VoiceSharp.ApplicationServices.JwtAuthService;
 using VoiceSharp.Domain.ValidationRules;
@@ -19,21 +18,13 @@ public static class Startup
         {
             scanner
                 .FromAssemblyOf<Marker>()
-                .AddClasses(classes => classes.AssignableTo(typeof(IValidationRule)))
+                .AddClasses(classes => classes.AssignableTo(typeof(IValidationRules)))
                 .UsingRegistrationStrategy(Scrutor.RegistrationStrategy.Skip)
                 .AsMatchingInterface()
                 .WithScopedLifetime();
         });
         services.AddJwtAuthService(configuration);
         services.AddMediatR(Assembly.GetExecutingAssembly());
-        return services;
-    }
-
-    public static IServiceCollection AddEmailService(this IServiceCollection services, IConfiguration configuration, string configurationSection)
-    {
-        services.Configure<EmailServiceSettings>(options => configuration.GetSection(configurationSection).Bind(options));
-        services.AddScoped<IEmailService, MailKitEmailService>();
-
         return services;
     }
 

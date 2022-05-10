@@ -1,13 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using VoiceSharp.Domain.ValidationRules;
+using VoiceSharp.Domain.ValidationRules.Auth;
 using VoiceSharp.Persistence;
 
 namespace VoiceSharp.ApplicationServices.Auth.ValidationRules;
-
-public interface IRefreshTokenRules : IValidationRule
-{
-    Task<bool> UserIsRegistered(string userName, CancellationToken cancellationToken);
-}
 
 public sealed class RefreshTokenRules : IRefreshTokenRules
 {
