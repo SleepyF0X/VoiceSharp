@@ -8,6 +8,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VoiceSharp.Domain", "VoiceS
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VoiceSharp.ApplicationServices", "VoiceSharp.ApplicationServices\VoiceSharp.ApplicationServices.csproj", "{559D579B-E2F3-44FC-BC8E-D8E0145B9AD4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VoiceSharp.Framework", "VoiceSharp.Framework\VoiceSharp.Framework.csproj", "{ACC6086D-8324-4890-B5CA-9FE9DC172ACE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,9 @@ Global
 		{559D579B-E2F3-44FC-BC8E-D8E0145B9AD4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{559D579B-E2F3-44FC-BC8E-D8E0145B9AD4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{559D579B-E2F3-44FC-BC8E-D8E0145B9AD4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ACC6086D-8324-4890-B5CA-9FE9DC172ACE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ACC6086D-8324-4890-B5CA-9FE9DC172ACE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ACC6086D-8324-4890-B5CA-9FE9DC172ACE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ACC6086D-8324-4890-B5CA-9FE9DC172ACE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

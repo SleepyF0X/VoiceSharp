@@ -1,6 +1,9 @@
-﻿namespace VoiceSharp.API.Requests.Auth;
+﻿using VoiceSharp.ApplicationServices.Auth.Commands;
+using VoiceSharp.Domain.Contracts.AutoMapper;
 
-public sealed class RefreshTokenRequest
+namespace VoiceSharp.API.Requests.Auth;
+
+public sealed class RefreshTokenRequest : IMapTo<RefreshTokenCommand>
 {
     public string RefreshToken { get; set; }
 }

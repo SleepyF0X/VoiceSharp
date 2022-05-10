@@ -48,18 +48,18 @@ public sealed class LoginCommandHandler : IRequestHandler<LoginCommand, Operatio
     {
         var user = await _userManager.FindByNameAsync(request.Email);
 
-        var isSucceeded = await _userManager.CheckPasswordAsync(user, request.Password);
+        var isSucceeded = await _userManager.CheckPasswordAsync(user!, request.Password);
 
         if (!isSucceeded)
         {
             return OperationResult.Fail<LoginResult>(ErrorConstants.InvalidCredentials);
         }
 
-        var userRoles = await _userManager.GetRolesAsync(user);
+        var userRoles = await _userManager.GetRolesAsync(user!);
         var roleClaims = userRoles.Select(_ => new Claim(ClaimsIdentity.DefaultRoleClaimType, _));
         var userClaims = new List<Claim>(roleClaims)
         {
-            new (ClaimsIdentity.DefaultNameClaimType, user.UserName),
+            new (ClaimsIdentity.DefaultNameClaimType, user!.UserName),
         };
 
         var jwtResult = _jwtService.GenerateTokens(user.UserName, userClaims, DateTime.UtcNow);

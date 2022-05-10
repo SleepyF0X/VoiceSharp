@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
+using VoiceSharp.ApplicationServices.JwtAuthService.ResultModels;
+using VoiceSharp.Domain.Contracts.AutoMapper;
 
 namespace VoiceSharp.API.Responses.Auth;
 
-public class LoginResponse
+public class LoginResponse : IMapFrom<LoginResult>
 {
     public string UserName { get; set; }
     public List<string> Roles { get; set; }
