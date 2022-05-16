@@ -1,17 +1,13 @@
-﻿using System.Reflection;
-using MediatR;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using VoiceSharp.ApplicationServices.JwtAuthService;
 using VoiceSharp.Domain.ValidationRules;
 
-namespace VoiceSharp.ApplicationServices;
+namespace VoiceSharp.Domain;
 
 public static class Startup
 {
-    public static IServiceCollection AddApplicationServices(
-        this IServiceCollection services,
-        IConfiguration configuration)
+    public static IServiceCollection AddDomain(
+        this IServiceCollection services)
     {
         services.Scan(scanner =>
         {
@@ -22,8 +18,6 @@ public static class Startup
                 .AsMatchingInterface()
                 .WithScopedLifetime();
         });
-        services.AddJwtAuthService(configuration);
-        services.AddMediatR(Assembly.GetExecutingAssembly());
         return services;
     }
 

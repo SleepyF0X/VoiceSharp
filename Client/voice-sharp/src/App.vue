@@ -161,4 +161,14 @@
     </div>
   </div>
 </template>
+<script>
+import { ValidationProvider } from "vee-validate";
+export default {
+  name: "HomeView",
+  components: {
+    // eslint-disable-next-line vue/no-unused-components
+    ValidationProvider,
+  },
+};
+</script>
 <style lang="scss"></style>

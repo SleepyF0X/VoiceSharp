@@ -5,11 +5,11 @@ using VoiceSharp.Domain.ValidationRules.Auth;
 
 namespace VoiceSharp.ApplicationServices.Auth.ValidationRules;
 
-public sealed class RegisterNewUserValidationRules : IRegisterRules
+public sealed class RegisterRules : IRegisterRules
 {
     private readonly UserManager<User> _userManager;
 
-    public RegisterNewUserValidationRules(UserManager<User> userManager)
+    public RegisterRules(UserManager<User> userManager)
     {
         _userManager = userManager;
     }

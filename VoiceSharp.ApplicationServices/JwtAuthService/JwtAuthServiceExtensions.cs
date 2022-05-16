@@ -1,8 +1,10 @@
 ﻿using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using VoiceSharp.Domain.Models;
 
 namespace VoiceSharp.ApplicationServices.JwtAuthService;
 
@@ -32,8 +34,10 @@ public static class JwtAuthServiceExtensions
                 ClockSkew = TimeSpan.Zero,
             };
         });
+
         services.AddSingleton<IJwtService, JwtService>();
         services.AddHostedService<JwtRefreshTokenCache>();
+        services.AddTransient<UserManager<User>>();
 
         return services;
     }

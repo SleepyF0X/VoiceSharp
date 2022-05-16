@@ -1,20 +1,26 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using VoiceSharp.Domain.Models;
 using VoiceSharp.Domain.ValidationRules.Auth;
-using VoiceSharp.Persistence;
 
 namespace VoiceSharp.ApplicationServices.Auth.ValidationRules;
 
 public sealed class LoginRules : ILoginRules
 {
-    private readonly VoiceSharpContext _context;
+    private readonly UserManager<User> _userManager;
 
-    public LoginRules(VoiceSharpContext context)
+    public LoginRules(UserManager<User> userManager)
     {
-        _context = context;
+        _userManager = userManager;
     }
 
-    public async Task<bool> UserIsRegistered(string userName, CancellationToken cancellationToken)
+    public async Task<bool> UserIsRegistered(string? userName, CancellationToken cancellationToken)
     {
-        return await _context.Users.AnyAsync(_ => _.UserName.ToLower().Equals(userName.ToLower()), cancellationToken);
+        if (userName == null)
+        {
+            return false;
+        }
+        
+        return await _userManager.Users.AnyAsync(_ => _.NormalizedUserName == userName.ToUpper(), cancellationToken);
     }
 }

@@ -14,6 +14,7 @@ using VoiceSharp.API.Middlewares;
 using VoiceSharp.ApplicationServices;
 using VoiceSharp.ApplicationServices.Auth.Commands;
 using VoiceSharp.ApplicationServices.AutoMapper;
+using VoiceSharp.Domain;
 using VoiceSharp.Framework;
 using VoiceSharp.Persistence;
 
@@ -59,6 +60,7 @@ public class Startup
             });
         });
         services
+            .AddDomain()
             .AddPersistence(Configuration)
             .AddApplicationServices(Configuration)
             .AddEmailService(Configuration, "EmailConfig")
@@ -74,6 +76,17 @@ public class Startup
         services.Configure<ApiBehaviorOptions>(options =>
         {
             options.SuppressModelStateInvalidFilter = true;
+        });
+        services.AddCors(options =>
+        {
+            options.AddDefaultPolicy(
+                builder =>
+                {
+                    builder.WithOrigins("http://localhost:8080");
+                    builder.AllowAnyMethod();
+                    builder.AllowCredentials();
+                    builder.AllowAnyHeader();
+                });
         });
     }
 
@@ -91,7 +104,7 @@ public class Startup
         app
             .UseMiddleware<GlobalErrorHandler>()
             .UseRouting()
-            .UseCors("AllowAll")
+            .UseCors()
             .UseAuthentication()
             .UseAuthorization()
             .UseEndpoints(endpoints =>
