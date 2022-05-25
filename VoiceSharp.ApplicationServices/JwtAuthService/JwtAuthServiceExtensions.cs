@@ -31,7 +31,7 @@ public static class JwtAuthServiceExtensions
                 ValidAudience = jwtTokenConfig.Audience,
                 ValidateAudience = true,
                 ValidateLifetime = true,
-                ClockSkew = TimeSpan.Zero,
+                ClockSkew = TimeSpan.FromMinutes(1),
             };
         });
 

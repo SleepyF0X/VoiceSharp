@@ -17,6 +17,7 @@
     "popper": "^1.0.1",
     "vee-validate": "^4.5.11",
     "vue": "^3.2.13",
+    "vue-auth-jwt": "^0.4.5",
     "vue-router": "^4.0.3",
     "vuex": "^4.0.0"
   },

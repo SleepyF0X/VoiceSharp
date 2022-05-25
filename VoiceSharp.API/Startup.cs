@@ -112,5 +112,6 @@ public class Startup
                 endpoints.MapControllers();
             })
             .EnsureDbMigrated<VoiceSharpContext>();
+        VoiceSharpContextSeedData.InitializeAsync(app.ApplicationServices, Configuration, env.IsDevelopment());
     }
 }

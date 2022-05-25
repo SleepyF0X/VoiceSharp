@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,6 +21,7 @@ public static class Startup
                         x => x.MigrationsAssembly(typeof(Startup).Assembly.GetName().FullName));
                 }, ServiceLifetime.Transient)
             .AddIdentityCore<User>()
+            .AddRoles<IdentityRole<int>>()
             .AddEntityFrameworkStores<VoiceSharpContext>();
         return services;
     }

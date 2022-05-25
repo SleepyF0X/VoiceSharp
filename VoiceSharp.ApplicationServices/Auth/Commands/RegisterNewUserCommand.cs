@@ -33,7 +33,7 @@ public class RegisterNewUserCommandValidator : AbstractValidator<RegisterNewUser
         RuleFor(_ => _.ConfirmPassword)
             .NotEmpty()
             .WithMessage(string.Format(ErrorConstants.FieldIsRequired, "Confirm Password"))
-            .Must((registerNewUserCommand, confirmPassword) => registerNewUserCommand.Password.Trim().Equals(confirmPassword.Trim()))
+            .Must((registerNewUserCommand, confirmPassword) => !string.IsNullOrWhiteSpace(confirmPassword) && registerNewUserCommand.Password.Trim().Equals(confirmPassword.Trim()))
             .WithMessage(ErrorConstants.PasswordsDoNotMatch);
     }
 }

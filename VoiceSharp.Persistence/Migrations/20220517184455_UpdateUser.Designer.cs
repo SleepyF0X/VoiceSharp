@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using VoiceSharp.Persistence;
@@ -11,9 +12,10 @@ using VoiceSharp.Persistence;
 namespace VoiceSharp.Persistance.Migrations
 {
     [DbContext(typeof(VoiceSharpContext))]
-    partial class VoiceSharpContextModelSnapshot : ModelSnapshot
+    [Migration("20220517184455_UpdateUser")]
+    partial class UpdateUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

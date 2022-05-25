@@ -8,20 +8,13 @@
       />
       <form name="form" @submit.prevent="handleLogin">
         <div class="form-group">
-          <label for="username">Username</label>
+          <label for="username">Email</label>
           <input
-            v-model="user.username"
+            v-model="user.email"
             type="text"
             class="form-control"
             name="username"
           />
-          <!--          <div
-            v-if="errors.has('username')"
-            class="alert alert-danger"
-            role="alert"
-          >
-            Username is required!
-          </div>-->
         </div>
         <div class="form-group">
           <label for="password">Password</label>
@@ -31,15 +24,8 @@
             class="form-control"
             name="password"
           />
-          <!--          <div
-            v-if="errors.has('password')"
-            class="alert alert-danger"
-            role="alert"
-          >
-            Password is required!
-          </div>-->
         </div>
-        <div class="form-group">
+        <div class="form-group mt-3 d-flex justify-content-center">
           <button class="btn btn-primary btn-block" :disabled="loading">
             <span
               v-show="loading"
@@ -48,7 +34,7 @@
             <span>Login</span>
           </button>
         </div>
-        <div class="form-group">
+        <div class="form-group mt-3">
           <div v-if="message" class="alert alert-danger" role="alert">
             {{ message }}
           </div>
@@ -81,15 +67,15 @@ export default {
   methods: {
     handleLogin() {
       this.loading = true;
-      if (this.user.username && this.user.password) {
+      if (this.user.email && this.user.password) {
         this.$store.dispatch("auth/login", this.user).then(
           () => {
-            this.$router.push("/profile");
+            this.$router.push("/home");
           },
           (error) => {
             this.loading = false;
             this.message =
-              (error.response && error.response.data) ||
+              (error.response && error.response.data.errors.join(", ")) ||
               error.message ||
               error.toString();
           }

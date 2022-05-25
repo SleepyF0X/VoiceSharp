@@ -22,98 +22,10 @@
               </a>
             </li>
             <li>
-              <a
-                href="#submenu1"
-                data-bs-toggle="collapse"
-                class="nav-link px-0 align-middle"
-              >
-                <i class="fs-4 bi-speedometer2"></i>
-                <span class="ms-1 d-none d-sm-inline">Dashboard</span>
-              </a>
-              <ul
-                class="collapse show nav flex-column ms-1"
-                id="submenu1"
-                data-bs-parent="#menu"
-              >
-                <li class="w-100">
-                  <a href="#" class="nav-link px-0">
-                    <span class="d-none d-sm-inline">Item</span> 1
-                  </a>
-                </li>
-                <li>
-                  <a href="#" class="nav-link px-0">
-                    <span class="d-none d-sm-inline">Item</span> 2
-                  </a>
-                </li>
-              </ul>
-            </li>
-            <li>
-              <a href="#" class="nav-link px-0 align-middle">
+              <router-link class="nav-link px-0 align-middle" to="test">
                 <i class="fs-4 bi-table"></i>
-                <span class="ms-1 d-none d-sm-inline">Orders</span></a
+                <span class="ms-1 d-none d-sm-inline">Test</span></router-link
               >
-            </li>
-            <li>
-              <a
-                href="#submenu2"
-                data-bs-toggle="collapse"
-                class="nav-link px-0 align-middle"
-              >
-                <i class="fs-4 bi-bootstrap"></i>
-                <span class="ms-1 d-none d-sm-inline">Bootstrap</span></a
-              >
-              <ul
-                class="collapse nav flex-column ms-1"
-                id="submenu2"
-                data-bs-parent="#menu"
-              >
-                <li class="w-100">
-                  <a href="#" class="nav-link px-0">
-                    <span class="d-none d-sm-inline">Item</span> 1</a
-                  >
-                </li>
-                <li>
-                  <a href="#" class="nav-link px-0">
-                    <span class="d-none d-sm-inline">Item</span> 2</a
-                  >
-                </li>
-              </ul>
-            </li>
-            <li>
-              <a
-                href="#submenu3"
-                data-bs-toggle="collapse"
-                class="nav-link px-0 align-middle"
-              >
-                <i class="fs-4 bi-grid"></i>
-                <span class="ms-1 d-none d-sm-inline">Products</span>
-              </a>
-              <ul
-                class="collapse nav flex-column ms-1"
-                id="submenu3"
-                data-bs-parent="#menu"
-              >
-                <li class="w-100">
-                  <a href="#" class="nav-link px-0">
-                    <span class="d-none d-sm-inline">Product</span> 1</a
-                  >
-                </li>
-                <li>
-                  <a href="#" class="nav-link px-0">
-                    <span class="d-none d-sm-inline">Product</span> 2</a
-                  >
-                </li>
-                <li>
-                  <a href="#" class="nav-link px-0">
-                    <span class="d-none d-sm-inline">Product</span> 3</a
-                  >
-                </li>
-                <li>
-                  <a href="#" class="nav-link px-0">
-                    <span class="d-none d-sm-inline">Product</span> 4</a
-                  >
-                </li>
-              </ul>
             </li>
             <li>
               <a href="#" class="nav-link px-0 align-middle">
@@ -123,7 +35,7 @@
             </li>
           </ul>
           <hr />
-          <div class="dropdown pb-4">
+          <div v-if="currentUser" class="dropdown pb-4">
             <a
               href="#"
               class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
@@ -150,9 +62,27 @@
               <li>
                 <hr class="dropdown-divider" />
               </li>
-              <li><a class="dropdown-item" href="#">Sign out</a></li>
+              <li>
+                <button class="dropdown-item" @click="logOut">Sign out</button>
+              </li>
             </ul>
           </div>
+          <ul
+            v-else
+            class="nav nav-pills flex-column mb-0 align-items-center align-items-sm-start"
+            aria-labelledby="dropdownUser1"
+          >
+            <li>
+              <router-link class="nav-link px-0 align-middle" to="login"
+                >Login</router-link
+              >
+            </li>
+            <li>
+              <router-link class="nav-link px-0 align-middle" to="register"
+                >Register</router-link
+              >
+            </li>
+          </ul>
         </div>
       </div>
       <div class="col">
@@ -168,6 +98,29 @@ export default {
   components: {
     // eslint-disable-next-line vue/no-unused-components
     ValidationProvider,
+  },
+  computed: {
+    currentUser() {
+      return this.$store.state.auth.user;
+    },
+  },
+  methods: {
+    logOut() {
+      if (this.currentUser) {
+        this.$store.dispatch("auth/logout").then(
+          () => {
+            this.$router.push("/home");
+          },
+          (error) => {
+            this.loading = false;
+            this.message =
+              (error.response && error.response.data.errors.join(", ")) ||
+              error.message ||
+              error.toString();
+          }
+        );
+      }
+    },
   },
 };
 </script>
