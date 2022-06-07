@@ -172,7 +172,7 @@ export default {
 
 <style scoped>
 .card {
-  width: 90%;
+  width: 60%;
   min-height: 40%;
 }
 </style>

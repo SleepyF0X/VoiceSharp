@@ -56,7 +56,7 @@ namespace VoiceSharp.ApplicationServices.Quiz.Commands;
             {
                 request.Answers,
                 request.Password
-            }));
+            }) + request.Password);
             var secondToken = HashFunctions.SHA512(firstToken + request.Identificator);
 
             var voterQuiz = await _context.VoterQuizzes.Where(vq => vq.Token == request.Token)
