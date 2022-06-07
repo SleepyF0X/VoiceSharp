@@ -22,7 +22,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\VoiceSharp.Domain\VoiceSharp.Domain.csproj" />
+        <ProjectReference Include="..\VoiceSharp.ApplicationServices\VoiceSharp.ApplicationServices.csproj" />
+        <ProjectReference Include="..\VoiceSharp.Domain\VoiceSharp.Domain.csproj" />
     </ItemGroup>
 
 </Project>

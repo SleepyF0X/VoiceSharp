@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using VoiceSharp.ApplicationServices.Infrastructure.EmailService;
 using VoiceSharp.Framework.EmailService;
 
 namespace VoiceSharp.Framework;

@@ -1,7 +1,6 @@
 using MailKit.Net.Smtp;
 using Microsoft.Extensions.Options;
 using MimeKit;
-using VoiceSharp.ApplicationServices.Infrastructure.EmailService;
 using VoiceSharp.Framework.EmailService.Models;
 
 namespace VoiceSharp.Framework.EmailService;

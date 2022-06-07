@@ -5,8 +5,7 @@ public class OperationResult
     public bool IsSucceeded { get; set; }
     public List<string>? Errors { get; set; }
     public static OperationResult<TResponse> Ok<TResponse>(TResponse result)
-        where TResponse : class
-        => new ()
+        where TResponse : class? => new ()
         {
             Result = result,
             Errors = null,

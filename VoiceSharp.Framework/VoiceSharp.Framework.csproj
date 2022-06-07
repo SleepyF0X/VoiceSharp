@@ -7,11 +7,13 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\VoiceSharp.ApplicationServices\VoiceSharp.ApplicationServices.csproj" />
     </ItemGroup>
 
     <ItemGroup>
+      <PackageReference Include="MailKit" Version="3.2.0" />
+      <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="6.0.0" />
       <PackageReference Include="Microsoft.Extensions.Options" Version="6.0.0" />
+      <PackageReference Include="MimeKit" Version="3.2.0" />
     </ItemGroup>
 
 </Project>

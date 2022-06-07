@@ -1,14 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using VoiceSharp.ApplicationServices.Interfaces.Persistence;
 using VoiceSharp.Domain.ValidationRules.Auth;
-using VoiceSharp.Persistence;
 
 namespace VoiceSharp.ApplicationServices.Auth.ValidationRules;
 
 public sealed class LogoutRules : ILogoutRules
 {
-    private readonly VoiceSharpContext _context;
+    private readonly IDatabase _context;
 
-    public LogoutRules(VoiceSharpContext context)
+    public LogoutRules(IDatabase context)
     {
         _context = context;
     }

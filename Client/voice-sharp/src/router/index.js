@@ -1,35 +1,53 @@
 import { createRouter, createWebHistory } from "vue-router";
-import HomeView from "../views/HomeView.vue";
 import LoginView from "@/views/auth/LoginView";
-import RegisterView from "@/views/auth/RegisterView";
-import TestView from "@/views/Test/TestView";
 import store from "../store/index";
+import EditorView from "@/views/quiz/EditorView";
+import ListView from "@/views/quiz/ListView";
+import QuizView from "@/views/quiz/QuizView";
+import ResultsView from "@/views/quiz/ResultsView";
 
 const routes = [
   {
     path: "/",
     name: "home",
-    component: HomeView,
+    meta: { layout: "DefaultLayout" },
+    component: ListView,
   },
   {
     path: "/login",
     name: "login",
+    meta: { layout: "PassingLayout" },
     component: LoginView,
   },
   {
-    path: "/register",
-    name: "register",
-    component: RegisterView,
+    path: "/quiz/create",
+    name: "quizCreator",
+    meta: { layout: "DefaultLayout" },
+    component: EditorView,
   },
   {
-    path: "/test",
-    name: "test",
-    component: TestView,
+    path: "/quiz/edit/:id",
+    name: "quizEditor",
+    meta: { layout: "DefaultLayout" },
+    component: EditorView,
   },
   {
-    path: "/about",
-    name: "about",
-    component: () => import("../views/AboutView.vue"),
+    path: "/quizzes",
+    name: "quizzes",
+    meta: { layout: "DefaultLayout" },
+    component: ListView,
+  },
+  {
+    path: "/quizzes/passing",
+    name: "quiz",
+    meta: { layout: "PassingLayout" },
+    component: QuizView,
+  },
+  {
+    path: "/quizzes/results",
+    name: "quizResults",
+    meta: { layout: "PassingLayout" },
+    component: ResultsView,
   },
 ];
 
@@ -39,7 +57,13 @@ const router = createRouter({
 });
 
 router.beforeEach(async (to, from, next) => {
-  const publicPages = ["/login", "/register", "/home"];
+  const publicPages = [
+    "/login",
+    "/register",
+    "/home",
+    "/quizzes/passing",
+    "/quizzes/results",
+  ];
   const authRequired = !publicPages.includes(to.path);
   const loggedIn = await store.state.auth.user;
   // trying to access a restricted page + not logged in

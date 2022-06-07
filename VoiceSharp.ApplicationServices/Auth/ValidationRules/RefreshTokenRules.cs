@@ -1,14 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using VoiceSharp.ApplicationServices.Interfaces.Persistence;
 using VoiceSharp.Domain.ValidationRules.Auth;
-using VoiceSharp.Persistence;
 
 namespace VoiceSharp.ApplicationServices.Auth.ValidationRules;
 
 public sealed class RefreshTokenRules : IRefreshTokenRules
 {
-    private readonly VoiceSharpContext _context;
+    private readonly IDatabase _context;
 
-    public RefreshTokenRules(VoiceSharpContext context)
+    public RefreshTokenRules(IDatabase context)
     {
         _context = context;
     }

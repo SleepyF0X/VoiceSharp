@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using VoiceSharp.ApplicationServices.Interfaces.Persistence;
 using VoiceSharp.Domain.Constants;
 using VoiceSharp.Domain.Models;
 
@@ -13,6 +14,7 @@ public static class Startup
         this IServiceCollection services,
         IConfiguration configuration)
     {
+        services.AddScoped<IDatabase, VoiceSharpContext>();
         services.AddDbContext<VoiceSharpContext>(
                 options =>
                 {
