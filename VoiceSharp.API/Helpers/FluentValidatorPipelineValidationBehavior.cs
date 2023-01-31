@@ -17,7 +17,7 @@ public class FluentValidatorPipelineValidationBehavior<TRequest, TResponse> : IP
         _validators = validators;
     }
 
-    public Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
+    public Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
     {
         var validationFailures = _validators
             .Select(validator => validator.ValidateAsync(new ValidationContext<TRequest>(request), cancellationToken))
